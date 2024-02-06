@@ -1,30 +1,40 @@
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        *{
+        * {
             font-family: sans-serif;
-            margin:0;
-            padding:0;
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
-        h1{
-            color:ivory;
+
+        h1 {
+            color: ivory;
             background-color: black;
             text-align: center;
             padding: 10px;
         }
-        main{
+
+        main {
             padding: 10px;
         }
-        input,p,button{
+
+        input,
+        p,
+        button {
             padding: 5px;
             margin: 5px;
         }
     </style>
+
 </head>
+
 <body>
     <!-- HTML DE LA ACTIVIDAD -->
     <header>
@@ -39,58 +49,13 @@
         <input id="pregunta-3" type="text">
         <br>
         <button onclick="comprobarRespuesta()">Comprobar</button>
+        <button onclick="recuperarRespuestaAnterior()">Cargar Respuesta Anterior</button>
+        <p id="respuesta-anterior"></p>
     </main>
-    
     <!-- VINCULAR/IMPORTAR ARCHIVO pgEvent.js PARA COMUNICACIONES CON PG-->
-    <!-- <script src="pgEvent.js"></script> -->
-    
-    <!-- LÓGICA DE LA ACTIVIDAD -->
-    <script>
-        let listaErrores = [];
-        function comprobarRespuesta(){
-            listaErrores = [];
-            // OBTENER RESPUESTAS ESTUDIANTE (FRONT)
-            const respuestas = [];
-            respuestas[0] = document.getElementById("pregunta-1").value;
-            respuestas[1] = document.getElementById("pregunta-2").value;
-            respuestas[2] = document.getElementById("pregunta-3").value;
-
-            // ENVIAR RESPUESTA EN SÍ A PG
-            // PIA y LEAN: inserte código para enviar respuesta en sí del alumno a PG
-
-            // VALIDAR RESPUESTAS ESTUDIANTE (FRONT)
-
-            if(respuestas[0].toUpperCase() != "BUENOS AIRES"){
-                listaErrores.push("¡Cuidado! La capital de Argentina no es " + respuestas[0]);
-            }
-
-            if(respuestas[1] != 4){
-                listaErrores.push("¡Cuidado! 2+2 no es " + respuestas[1]);
-            }
-
-            if(respuestas[2].toUpperCase() != "BLANCO"){
-                listaErrores.push("¡Cuidado! El caballo de San Martín no era de color " + respuestas[2])
-            }
-            
-            // INFORMAR STATUS APROBACIÓN A PG
-
-            if(listaErrores.length===0){
-                // enviar status CORRECTO + "¡Has completado correctamente el cuestionario!"
-            } else { 
-                // enviar status INCORRECTO + errores joineados
-            }
-
-        }
-
-        // FUNCIÓN PARA REESTABLECER RESPUESTA ANTERIOR RECUPERANDO DE PG
-
-        function recuperarRespuestaAnterior(){
-            // tomar status anterior de respuesta guardada
-        }
-
-        // SETEAR EVENTO LOAD PÁGINA - REESTABLECER RESPUESTA ANTERIOR PG
-        // Setear evento de reestablecimiento respuesta anterior en el load.
-
-    </script>
+<!-- <script type="module" src="./pgEvent.js"></script> -->
+<!-- LÓGICA DE LA ACTIVIDAD -->
+<script src="./script.js"></script>
 </body>
+
 </html>
