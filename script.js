@@ -87,12 +87,12 @@ function comprobarRespuesta() {
     // Enviamos el STATUS y MENSAJE a exponer al back de PG
 
     if (listaErrores.length === 0) {
-        // envio en el onSuccessEvent el texto quq quiero que aparezca en PG arriba
+        // envio en el onSuccessEvent el texto que quiero que aparezca en PG arriba
         pgEvent.onSuccessEvent("¡Has completado correctamente el cuestionario!")
         console.log(listaErrores)
     } else {
-        // envio en el onSuccessEvent el texto quq quiero que aparezca en PG arriba
-        pgEvent.onSuccessEvent(listaErrores.join())
+        // envio en el onFailEvent el texto que quiero que aparezca en PG arriba
+        pgEvent.onFailEvent(listaErrores.join())
         console.log(listaErrores.join())
     }
     // enviar en STATUS a PG, las respuestas del alumno, para poder recuperarlas despues
