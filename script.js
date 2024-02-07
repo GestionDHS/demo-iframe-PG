@@ -51,16 +51,19 @@ class PgEvent {
   }
 
   sendState(state) {
+    console.log(state)
     this.data["event"] = "STATE"
     this.data["state"] = state
     window.top.postMessage(this.data, "*");
   }
 }
+const pgEvent = new PgEvent()
+window.onload = pgEvent.getValues();
 // Fin de archivo pgEvent.js -----------
 
 
 //Comienzo de la instanciacion de la actividad --------------------------
-const pgEvent = new PgEvent()
+
 function comprobarRespuesta() {
 
   let listaErrores = [];
@@ -69,6 +72,10 @@ function comprobarRespuesta() {
   respuestas[0] = document.getElementById("pregunta-1").value;
   respuestas[1] = document.getElementById("pregunta-2").value;
   respuestas[2] = document.getElementById("pregunta-3").value;
+
+  //Enviamos a PG las respuestas
+  pgEvent.sendState(JSON.stringify({"respuestas": respuestas}))
+  console.log("respuestas: " + respuestas.join('-'))
 
   // VALIDAR RESPUESTAS ESTUDIANTE (FRONT)
 
@@ -94,10 +101,7 @@ function comprobarRespuesta() {
     // envio en el onFailEvent el texto que quiero que aparezca en PG arriba
     pgEvent.onFailEvent(listaErrores.join())
     console.log(listaErrores.join())
-  }
-  // enviar en STATUS a PG, las respuestas del alumno, para poder recuperarlas despues
-  pgEvent.sendState(respuestas.join('-'))
-  console.log("respuestas: " + respuestas.join('-'))
+  }  
 
 }
 
@@ -107,10 +111,13 @@ let respuestasPrecargadas = "";
 
 window.addEventListener('message', function (event) {
   if (isValidInitialEvent(event)) {
-    respuestasPrecargadas = validateJson(event.data.data) ? event.data.data : "Aun no guardó/comprobó su respuesta";
-    console.log(respuestasPrecargadas)
+    respuestasPrecargadas = validateJson(event.data.data) ? event.data.data : false;
+    console.log("recibiendo: "+ respuestasPrecargadas)
     //Cargamos los inputs con las respuestas que fueron previamente guardadas
-    document.getElementById("respuesta-anterior").innerHTML = respuestasPrecargadas
+    if(respuestasPrecargadas){
+      cargarRespuestasAnteriores(JSON.parse(respuestasPrecargadas))
+    }
+    
   } else {
     console.log("no escucha message desde PG")
   }
@@ -134,6 +141,12 @@ const validateJson = (json) => {
 
 // SETEAR EVENTO LOAD PÁGINA - REESTABLECER RESPUESTA ANTERIOR PG
 // Setear evento de reestablecimiento respuesta anterior en el load.
-window.onload = pgEvent.getValues();
+
 
 //Fin de la instanciacion de la actividad --------------------------
+
+function cargarRespuestasAnteriores(respuestas){
+  document.getElementById("pregunta-1").value = respuestas.respuestas[0]
+  document.getElementById("pregunta-2").value = respuestas.respuestas[1]
+  document.getElementById("pregunta-3").value = respuestas.respuestas[2]
+}
