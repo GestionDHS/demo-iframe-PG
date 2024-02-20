@@ -74,8 +74,8 @@ function comprobarRespuesta() {
   respuestas[2] = document.getElementById("pregunta-3").value;
 
   //Enviamos a PG las respuestas
-  // pgEvent.sendState(JSON.stringify({"respuestas": respuestas}))
-  // console.log("respuestas: " + respuestas.join('-'))
+  pgEvent.sendState(JSON.stringify({"respuestas": respuestas}))
+  console.log("respuestas: " + respuestas.join('-'))
 
   // VALIDAR RESPUESTAS ESTUDIANTE (FRONT)
 
@@ -102,9 +102,6 @@ function comprobarRespuesta() {
     pgEvent.onFailEvent(listaErrores.join())
     console.log(listaErrores.join())
   }  
- //Enviamos a PG las respuestas
-  pgEvent.sendState(JSON.stringify({"respuestas": respuestas}))
-  console.log("respuestas: " + respuestas.join('-'))
 }
 
 // RECUPERARMOS RESPUESTA ANTERIOR, previamente enviada al back de PG
