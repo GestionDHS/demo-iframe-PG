@@ -101,7 +101,7 @@ function comprobarRespuesta() {
     console.log(listaErrores)
   } else {
     // envio en el onFailEvent el texto que quiero que aparezca en PG arriba
-    pgEvent.onFailEvent(listaErrores.join(),rasones)
+    pgEvent.onFailEvent(listaErrores.join(),reaseons)
     console.log(listaErrores.join())
   }  
 }
