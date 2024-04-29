@@ -44,9 +44,10 @@ class PgEvent {
     window.top.postMessage(this.data, "*");
   }
 
-  onFailEvent(message) {
+  onFailEvent(message,rasones) {
     this.data["event"] = "FAILURE";
     this.data["message"] = message;
+    this.data["reasons"] = rasones;
     window.top.postMessage(this.data, "*");
   }
 
@@ -67,6 +68,7 @@ window.onload = pgEvent.getValues();
 function comprobarRespuesta() {
 
   let listaErrores = [];
+  let reaseons = [];
   // OBTENER RESPUESTAS ESTUDIANTE (FRONT)
   const respuestas = [];
   respuestas[0] = document.getElementById("pregunta-1").value;
@@ -99,7 +101,7 @@ function comprobarRespuesta() {
     console.log(listaErrores)
   } else {
     // envio en el onFailEvent el texto que quiero que aparezca en PG arriba
-    pgEvent.onFailEvent(listaErrores.join())
+    pgEvent.onFailEvent(listaErrores.join(),rasones)
     console.log(listaErrores.join())
   }  
 }
